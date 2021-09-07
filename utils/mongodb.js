@@ -12,7 +12,7 @@ const connect = async () => {
       useUnifiedTopology: true,
     });
     const { name, host } = db.connection;
-    console.log(`Conectado correctamente a la DB ${name}`);
+    console.log(`Conectado correctamente a la DB ${name}, en el host ${host}`);
   } catch (error) {
     console.log("No se pudo conectar a la DB");
   }
