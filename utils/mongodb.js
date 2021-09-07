@@ -17,3 +17,5 @@ const connect = async () => {
     console.log("No se pudo conectar a la DB");
   }
 };
+
+module.exports = { connect };
