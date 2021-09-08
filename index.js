@@ -10,6 +10,8 @@ const rootRoutes = require('./routes/Root.routes');
 const { connect } = require('./utils/mongodb');
 connect();
 
+const PORT = 3000;
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -27,3 +29,5 @@ app.use((error, req, res, next) => {
     console.log(error);
     return res.status(error.status || 500).json(error.message || "Unexpected Error");
 });
+
+app.listen(PORT, () => console.log(`Servidor funcionando http://localhost:${PORT}`));
