@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const path = require('path');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 const shelterRoutes = require('./routes/Shelter.routes');
 const petRoutes = require('./routes/Pet.routes');
 const userRoutes = require('./routes/User.routes');
