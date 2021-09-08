@@ -3,7 +3,7 @@ const Shelter = require("../../models/Pet.model");
 const bcrypt = require("bcrypt");
 const { validateEmail, validatePass } = require("../utils");
 
-const registerStrategy = new LocalStrategy(
+const registerStrategy2 = new LocalStrategy(
     {
         usernameField: "email",
         passwordField: "password",
@@ -51,4 +51,4 @@ const registerStrategy = new LocalStrategy(
     }
 );
 
-module.exports = registerStrategy;
+module.exports = registerStrategy2;
