@@ -11,18 +11,6 @@ const getById = async(req, res, next) => {
     }
 };
 
-const editById = async(req, res, next) => {
-    const { id } = req.params;
-
-    try {
-        const user = await User.findById(id);
-        return res.json(user);
-
-    } catch (error) {
-        return next(error);
-    }
-};
-
 const putById = async(req, res, next) => {
     const { id } = req.params;
     const { fullName, birthdate, email, password, avatar, phone, province, interest } = req.body
@@ -67,4 +55,4 @@ const deleteById = async(req, res, next) => {
         return next(error);
     }
 };
-module.exports = { getById, editById, putById, deleteById };
+module.exports = { getById, putById, deleteById };
