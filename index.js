@@ -39,3 +39,5 @@ app.use((error, req, res, next) => {
 });
 
 app.listen(PORT, () => console.log(`Servidor funcionando http://localhost:${PORT}`));
+
+console.log('hola');
