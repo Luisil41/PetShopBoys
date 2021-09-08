@@ -8,7 +8,7 @@ router.put('/edit/:id', controller.petEditPut);
 
 router.post('/new', controller.petCreatePost);
 
-router.get('/filter', controller.petFilter);
+router.get('/filter', controller.filteredPet);
 
 router.delete("/delete/:id", controller.petDelete);
 
