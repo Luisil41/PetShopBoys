@@ -14,7 +14,7 @@ const shelterById = async (req, res, next) => {
 const shelterDeleteById = async (req, res, next) => {
     const { id } = req.params;
     try {
-        const deletedShelter = await Shelter.findById(id);
+        const deletedShelter = await Shelter.findByIdAndDelete(id);
 
         if (!deletedShelter) {
             const error = new Error('Protectora no encontrada.');
