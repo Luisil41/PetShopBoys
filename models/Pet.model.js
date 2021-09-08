@@ -10,7 +10,7 @@ const petSchema = new Schema({
     },
     name: { type: String, required: true },
     age: { type: Number },
-    avatar: { type: String, required: true},
+    avatar: { type: String },
     sex: {
         type: String,
         enum: ['male', 'female'],
