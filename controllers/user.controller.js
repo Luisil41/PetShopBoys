@@ -46,8 +46,25 @@ const putById = async (req, res, next) => {
   } catch (error) {
     return next(error)
   }
+
+  const deleteById = async (req, res, next) => {
+    const { id } = req.params;
+  
+    try {
+      const deleteUser = await User.findByIdAndDelete(id);
+        if(!deleteUser){
+          const error = new Error('Usuario no encontrado');
+          return next(error);
+        } else {
+          return res.redirect('/');
+        }
+      
+  
+    } catch (error) {
+      return next(error);
+    }
+  };
+  
 }
 
-
-
-module.exports = { getById, editById, putById };
+module.exports = { getById, editById, putById, deleteById };
