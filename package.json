@@ -7,7 +7,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node index.js",
         "dev": "nodemon index.js",
-        "seed": "node ./seeds/shelter.seed.js"
+        "seed": "node ./seeds/shelter.seed.js && node ./seeds/pet.seed.js && node ./seeds/user.seed.js"
     },
     "keywords": [],
     "author": "",
