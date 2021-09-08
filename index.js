@@ -15,6 +15,7 @@ const rootRoutes = require('./routes/Root.routes');
 const { connect } = require('./utils/mongodb');
 connect();
 
+// COMENTARIO DE PRUEBA
 const PORT = 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -39,3 +40,5 @@ app.use((error, req, res, next) => {
 });
 
 app.listen(PORT, () => console.log(`Servidor funcionando http://localhost:${PORT}`));
+
+console.log('hola');
