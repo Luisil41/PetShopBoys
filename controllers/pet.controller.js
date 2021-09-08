@@ -4,10 +4,12 @@ const petsGet = async(req, res, next) => {
     try {
         const pets = await Pet.find();
 
-        return ///
+        return res.status(200).json(pets);
     } catch (error) {
         return next(error);
     }
 }
 
-const pet
+const petDetailGet = async(req, res, next) => {
+
+}
