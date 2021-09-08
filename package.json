@@ -18,6 +18,10 @@
     "connect-mongo": "^4.5.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+<<<<<<< HEAD
+=======
+    "express-session": "^1.17.2",
+>>>>>>> 85e269a5992f59ad325208d770a5bc68168e4a2e
     "method-override": "^3.0.0",
     "mongoose": "^6.0.5",
     "multer": "^1.4.3",
