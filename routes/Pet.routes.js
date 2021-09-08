@@ -5,6 +5,7 @@ const { upload, uploadToCloudinary } = require('../middlewares/file.middlewares'
 const router = express.Router();
 
 router.get('/all', controller.petsGet);
+
 router.put('/edit/:id', controller.petEditPut);
 
 router.post('/new', [upload.single('avatar'), uploadToCloudinary], controller.petCreatePost);
