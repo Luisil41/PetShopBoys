@@ -11,5 +11,4 @@ router.put('/edit/:id', controller.putById);
 
 router.delete('/delete/:id', controller.deleteById);
 
-
 router.get('/:id', controller.getById);
