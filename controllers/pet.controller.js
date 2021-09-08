@@ -24,33 +24,38 @@ const petDetailGet = async(req, res, next) => {
 }
 
 const petCreatePost = async(req, res, next) => {
-    const { types, name, age, sex, breed, size, isVaccinated, isSterilized, isDewormed, microchip, provice, shelter, status } = req.body;
+    const { type, name, age, sex, breed, size, isVaccinated, isSterilized, isDewormed, microchip, province, shelter, status } = req.body;
 
-    const newPet = new Pet({
-        types,
-        name,
-        age,
-        sex,
-        breed,
-        size,
-        isVaccinated,
-        isSterilized,
-        isDewormed,
-        microchip,
-        provice,
-        shelter,
-        status
-    });
+    try {
 
-    const createdPet = await newPet.save();
+        const newPet = new Pet({
+            type,
+            name,
+            age,
+            sex,
+            breed,
+            size,
+            isVaccinated,
+            isSterilized,
+            isDewormed,
+            microchip,
+            province,
+            shelter,
+            status
+        });
 
-    if (shelter) {
-        const findShelter = await Shelter.findById(newPet.shelter).populate('pets');
-        findShelter.pets.push(createdPet._id);
-        await Shelter.findByIdAndUpdate(newPet.shelter, findShelter, { new: true });
+        const createdPet = await newPet.save();
+
+        if (shelter) {
+            const findShelter = await Shelter.findById(newPet.shelter).populate('pets');
+            findShelter.pets.push(createdPet._id);
+            await Shelter.findByIdAndUpdate(newPet.shelter, findShelter, { new: true });
+        }
+
+        return res.redirect(`/pet/${createdPet._id}`);
+    }catch (error) {
+        return next(error);
     }
-
-    return res.redirect(`/pet/${createdPet._id}`);
 
 }
 
@@ -58,10 +63,10 @@ const petEditPut = async(req, res, next) => {
     const { id } = req.params;
 
     try {
-        const { types, name, age, sex, breed, size, isVaccinated, isSterilized, isDewormed, microchip, provice, shelter, status } = req.body;
+        const { type, name, age, sex, breed, size, isVaccinated, isSterilized, isDewormed, microchip, province, shelter, status } = req.body;
         const update = {};
 
-        if (types) update.types = types;
+        if (type) update.type = type;
         if (name) update.name = name;
         if (age) update.age = age;
         if (sex) update.sex = sex;
@@ -71,7 +76,7 @@ const petEditPut = async(req, res, next) => {
         if (isSterilized) update.isSterilized = isSterilized;
         if (isDewormed) update.isDewormed = isDewormed;
         if (microchip) update.microchip = microchip;
-        if (provice) update.provice = provice;
+        if (province) update.province = province;
         if (shelter) update.shelter = shelter;
         if (status) update.status = status;
 
@@ -93,7 +98,7 @@ const petDelete = async(req, res, next) => {
             const error = new Error('Mascota no encontrada');
             return next(error);
         } else {
-            return res.redirect('/'); // Revisar redirect más adelante
+            return res.redirect(`/pet/all`); // Revisar redirect más adelante
         }
     } catch (error) {
         return next(error);
@@ -102,20 +107,20 @@ const petDelete = async(req, res, next) => {
 
 const filteredPet = async(req, res, next) => {
     try {
-        const { types, age, sex, breed, size, isVaccinated, isSterilized, isDewormed, microchip, provice, status } = req.query;
+        const { type, age, sex, breed, size, isVaccinated, isSterilized, isDewormed, microchip, province, status } = req.query;
         const request = {};
 
-        if (types) update.types = types; // revisar si es necesario { $regex: new RegExp("^" + color.toLowerCase(), "i") };
-        if (age) update.age = age;
-        if (sex) update.sex = sex;
-        if (breed) update.breed = breed;
-        if (size) update.size = size;
-        if (isVaccinated) update.isVaccinated = isVaccinated;
-        if (isSterilized) update.isSterilized = isSterilized;
-        if (isDewormed) update.isDewormed = isDewormed;
-        if (microchip) update.microchip = microchip;
-        if (provice) update.provice = provice;
-        if (status) update.status = status;
+        if (type) request.type = type; // revisar si es necesario { $regex: new RegExp("^" + color.toLowerCase(), "i") };
+        if (age) request.age = age;
+        if (sex) request.sex = sex;
+        if (breed) request.breed = breed;
+        if (size) request.size = size;
+        if (isVaccinated) request.isVaccinated = isVaccinated;
+        if (isSterilized) request.isSterilized = isSterilized;
+        if (isDewormed) request.isDewormed = isDewormed;
+        if (microchip) request.microchip = microchip;
+        if (province) request.province = province;
+        if (status) request.status = status;
 
         const filtered = await Pet.find(request);
 

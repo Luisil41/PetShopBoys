@@ -4,6 +4,7 @@ const controller = require('../controllers/pet.controller');
 const router = express.Router();
 
 router.get('/all', controller.petsGet);
+
 router.put('/edit/:id', controller.petEditPut);
 
 router.post('/new', controller.petCreatePost);
