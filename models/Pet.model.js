@@ -10,7 +10,7 @@ const petSchema = new Schema({
     },
     name: { type: String, required: true },
     age: { type: Number },
-    avatar: { type: String },
+    avatar: { type: String, required: true},
     sex: {
         type: String,
         enum: ['male', 'female'],
@@ -26,13 +26,13 @@ const petSchema = new Schema({
     isDewormed: { type: Boolean },
     microchip: { type: Boolean },
     province: { type: String, required: true },
-    shelter: { type: mongoose.Types.ObjectId, ref: 'Shelters' }, // comprobar shcema de Shelter
+    shelter: { type: mongoose.Types.ObjectId, ref: 'Shelter' }, // comprobar schema de Shelter
     status: {
         type: String,
-        enum: ['forAdoption', 'adoptionProcess', 'adopted'] // definir las opciones de status
+        enum: ['forAdoption', 'adoptionProcess', 'adopted', 'hostHouse'] // definir las opciones de status
     }
 }, { timestamps: true });
 
-const Pet = mongoose.model('Pets', petSchema);
+const Pet = mongoose.model('Pet', petSchema);
 
 module.exports = Pet;
