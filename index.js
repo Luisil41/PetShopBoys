@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 
 const shelterRoutes = require('./routes/Shelter.routes');
 const petRoutes = require('./routes/Pet.routes');
 const userRoutes = require('./routes/User.routes');
+const requestRoutes = require('./routes/Request.routes');
 
 const rootRoutes = require('./routes/Root.routes');
 
@@ -12,6 +14,8 @@ connect();
 
 const PORT = 3000;
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -19,6 +23,7 @@ app.use('/', rootRoutes);
 app.use('/shelter', shelterRoutes);
 app.use('/pet', petRoutes);
 app.use('/user', userRoutes);
+app.use('/request', requestRoutes);
 
 app.use('*', (req, res, next) => {
     const error = new Error('Ruta no encontrada');
