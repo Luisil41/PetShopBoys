@@ -3,8 +3,9 @@ const controller = require('../controllers/shelter.controller');
 
 const router = express.Router();
 
+router.get("/all", controller.shelterGet);
+
 router.put('/edit/:id', controller.shelterEditPut);
-router.get('/edit/:id', controller.shelterEditGet);
 
 router.delete("/delete/:id", controller.shelterDeleteById);
 

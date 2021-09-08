@@ -24,13 +24,14 @@ const petDetailGet = async(req, res, next) => {
 }
 
 const petCreatePost = async(req, res, next) => {
-    const { type, name, age, sex, breed, size, isVaccinated, isSterilized, isDewormed, microchip, province, shelter, status } = req.body;
+    const { type, name, avatar, age, sex, breed, size, isVaccinated, isSterilized, isDewormed, microchip, province, shelter, status } = req.body;
 
     try {
 
         const newPet = new Pet({
             type,
             name,
+            avatar: req.imageUrl ? req.imageUrl : '',
             age,
             sex,
             breed,
@@ -82,7 +83,7 @@ const petEditPut = async(req, res, next) => {
 
         const updatedPet = await Pet.findByIdAndUpdate(id, update, { new: true });
 
-        return res.redirect(`/pet/${updatedPet.id}`);
+        return res.redirect(`/pet/${updatedPet._id}`);
 
     } catch (error) {
         return next(error);
@@ -98,7 +99,7 @@ const petDelete = async(req, res, next) => {
             const error = new Error('Mascota no encontrada');
             return next(error);
         } else {
-            return res.redirect(`/pet/all`); // Revisar redirect más adelante
+            return res.redirect(`/pet/all`);
         }
     } catch (error) {
         return next(error);
