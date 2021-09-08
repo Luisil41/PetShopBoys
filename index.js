@@ -15,6 +15,7 @@ const rootRoutes = require('./routes/Root.routes');
 const { connect } = require('./utils/mongodb');
 connect();
 
+// COMENTARIO DE PRUEBA
 const PORT = 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
