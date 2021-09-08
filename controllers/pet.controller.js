@@ -12,4 +12,5 @@ const petsGet = async(req, res, next) => {
 
 const petDetailGet = async(req, res, next) => {
 
+
 }
