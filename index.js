@@ -1,9 +1,10 @@
 const express = require('express');
-const app = express();
+const passport = require('passport');
 const path = require('path');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-const passport = require('passport');
+const app = express();
+
 
 const dotenv = require('dotenv');
 dotenv.config();
