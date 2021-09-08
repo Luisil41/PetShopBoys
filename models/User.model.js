@@ -10,14 +10,14 @@ const userSchema = new Schema(
     email: { type: String, required: true },
     password: { type: String, required: true },
     avatar: { type: String, required: false },
-    phone: { type: Number, required: true },
-    province: { type: Number, required: true },
-    interests: { type: Array, required: false },
+    phone: { type: String, required: true },
+    province: { type: String, required: true },
+    interest: {
+      type: String,
+      enum: ['adoption', 'both', 'hosting'] // definir las opciones de status
+  },
     verified: {
       type: Boolean,
-      required: true,
-      enum: ["dog", "cat", "others"],
-      default: "dog",
     },
   },
   { timestamps: true }

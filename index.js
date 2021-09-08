@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 
 const shelterRoutes = require('./routes/Shelter.routes');
+const petRoutes = require('./routes/Pet.routes');
+const userRoutes = require('./routes/User.routes');
+
 const rootRoutes = require('./routes/Root.routes');
 
 const { connect } = require('./utils/mongodb');
@@ -12,6 +15,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/', rootRoutes);
 app.use('/shelter', shelterRoutes);
+app.use('/pet', petRoutes);
+app.use('/user', userRoutes);
+
 app.use('*', (req, res, next) => {
     const error = new Error('Ruta no encontrada');
     return res.status(404).json(error.message);
