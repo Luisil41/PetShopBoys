@@ -1,29 +1,28 @@
 const LocalStrategy = require("passport-local").Strategy;
-const Shelter = require("../../models/Pet.model");
+const Shelter = require("../../models/Shelter.model");
 const bcrypt = require("bcrypt");
 const { validateEmail, validatePass } = require("../utils");
 
-const registerStrategy = new LocalStrategy(
-    {
+const registerStrategy2 = new LocalStrategy({
         usernameField: "email",
         passwordField: "password",
         passReqToCallback: true,
     },
-    async (req, email, pass, done) => {
-        try{
-            const existingShelter = await Shelter.findOne({email});
+    async(req, email, pass, done) => {
+        try {
+            const existingShelter = await Shelter.findOne({ email });
 
-            if(existingUser){
+            if (existingShelter) {
                 const error = new Error('El refugio ya existe.');
                 return done(error);
             }
 
-            if(!validateEmail(email)){
+            if (!validateEmail(email)) {
                 const error = new Error('El formato de email no es correcto.');
                 return done(error);
             }
 
-            if(!validatePass(pass)){
+            if (!validatePass(pass)) {
                 const error = new Error('El formato de contraseña no es válido.');
                 return done(error);
             }
@@ -33,22 +32,22 @@ const registerStrategy = new LocalStrategy(
 
             const newShelter = new Shelter({
                 email,
-                password:hash,
+                password: hash,
                 name: req.body.name,
-                adress: req.body.adress,
+                address: req.body.address,
                 avatar: req.imageUrl ? req.imageUrl : '',
                 phone: req.body.phone,
             });
 
             const shelter = await newShelter.save();
-            user.password = null;
-            
+            shelter.password = null;
+
             return done(null, shelter);
 
-        }catch (error) {
+        } catch (error) {
             return done(error);
         }
     }
 );
 
-module.exports = registerStrategy;
+module.exports = registerStrategy2;
