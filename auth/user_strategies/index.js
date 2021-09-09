@@ -1,11 +1,11 @@
 const passport = require('passport');
-const registerStrategy = require('./user_strategies/register.strategy');
-const loginStrategy = require('./user_strategies/login.strategy');
-const User = require('../models/User.model');
+const registerStrategy = require('./register.strategy');
+const loginStrategy = require('./login.strategy');
+const User = require('../../models/User.model');
 
-const registerStrategyShelter = require('./shelter_strategies/register.strategy');
-const loginStrategyShelter = require('./shelter_strategies/login.strategy');
-const Shelter = require('../models/Shelter.model');
+// const registerStrategyShelter = require('../shelter_strategies/register.strategy');
+// const loginStrategyShelter = require('../shelter_strategies/login.strategy');
+// const Shelter = require('../../models/Shelter.model');
 
 
 
@@ -39,8 +39,8 @@ passport.deserializeUser(async(userId, done) => {
 const useStrategy = () => {
     passport.use('register_user', registerStrategy);
     passport.use('login_user', loginStrategy);
-    passport.use('register_shelter', registerStrategyShelter);
-    passport.use('login_shelter', loginStrategyShelter);
+    // passport.use('register_shelter', registerStrategyShelter);
+    // passport.use('login_shelter', loginStrategyShelter);
 };
 
 module.exports = { useStrategy };
