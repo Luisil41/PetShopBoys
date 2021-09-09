@@ -35,35 +35,35 @@ const loginUserPost = (req, res, next) => {
 
 //Shelter
 
-const registerShelterPost = (req, res, next) => {
-    try {
+// const registerShelterPost = (req, res, next) => {
+//     try {
 
-        const done = (error, shelter) => { //shelter -> user change
-            if (error) return res.json(error);
-            req.login(shelter, (error) => (error ? next(error) : res.json(shelter)));
-        };
+//         const done = (error, shelter) => { //shelter -> user change
+//             if (error) return res.json(error);
+//             req.login(shelter, (error) => (error ? next(error) : res.json(shelter)));
+//         };
 
-        passport.authenticate('register_shelter', done)(req);
+//         passport.authenticate('register_shelter', done)(req);
 
-    } catch (error) {
-        return next(error);
-    }
-};
+//     } catch (error) {
+//         return next(error);
+//     }
+// };
 
-const loginShelterPost = (req, res, next) => {
-    try {
+// const loginShelterPost = (req, res, next) => {
+//     try {
 
-        const done = (error, shelter) => { // shelter -> user change
-            if (error) return res.json(error);
-            req.login(shelter, (error) => (error ? next(error) : res.redirect('/')));
-        };
+//         const done = (error, shelter) => { // shelter -> user change
+//             if (error) return res.json(error);
+//             req.login(shelter, (error) => (error ? next(error) : res.redirect('/')));
+//         };
 
-        passport.authenticate('login_shelter', done)(req);
+//         passport.authenticate('login_shelter', done)(req);
 
-    } catch (error) {
-        return next(error);
-    }
-};
+//     } catch (error) {
+//         return next(error);
+//     }
+// };
 
 const logoutPost = (req, res, next) => {
     try {
@@ -84,7 +84,7 @@ const logoutPost = (req, res, next) => {
 module.exports = {
     loginUserPost,
     registerUserPost,
-    registerShelterPost,
-    loginShelterPost,
+    // registerShelterPost,
+    // loginShelterPost,
     logoutPost
 }

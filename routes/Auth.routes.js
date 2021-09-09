@@ -8,8 +8,8 @@ router.post('/user/register', [upload.single('avatar'), uploadToCloudinary], con
 router.post('/user/login', controller.loginUserPost);
 
 //Shelter
-router.post('/shelter/register', [upload.single('avatar'), uploadToCloudinary], controller.registerShelterPost);
-router.post('/shelter/login', controller.loginShelterPost);
+// router.post('/shelter/register', [upload.single('avatar'), uploadToCloudinary], controller.registerShelterPost);
+// router.post('/shelter/login', controller.loginShelterPost);
 
 
 router.post('/logout', controller.logoutPost);
