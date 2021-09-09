@@ -17,8 +17,9 @@ const userSchema = new Schema(
       enum: ['adoption', 'both', 'hosting'] // definir las opciones de status
   },
     verified: {
-      type: Boolean,
+      type: Boolean, default: false
     },
+    form: { type: mongoose.Types.ObjectId, ref: 'Form'}
   },
   { timestamps: true }
 );
