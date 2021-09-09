@@ -2,32 +2,33 @@ const LocalStrategy = require("passport-local").Strategy;
 const Shelter = require("../../models/Shelter.model");
 const bcrypt = require("bcrypt");
 
-const loginStrategy2 = new LocalStrategy({
-        shelternameField: "email",
+const loginStrategy2 = new LocalStrategy(
+    {
+        usernameField: "email",
         passwordField: "password",
         passReqToCallback: true,
     },
-    async(req, email, pass, done) => {
-        try {
-            const existingShelter = await Shelter.findOne({ email });
-
-            if (!existingShelter) {
+    async (req, email, pass, done) => {
+        try{
+            const existingUser = await Shelter.findOne({email});
+            
+            if(!existingUser){
                 const error = new Error('El refugio no existe.');
                 return done(error);
             }
 
-            const checkPassword = await bcrypt.compare(pass, existingShelter.password);
+            const checkPassword = await bcrypt.compare(pass, existingUser.password);
 
-            if (!checkPassword) {
+            if(!checkPassword){
                 const error = new Error('La contraseña no es correcta.');
                 return done(error);
             }
 
-            existingShelter.password = null;
+            existingUser.password = null;
 
-            return done(null, existingShelter);
+            return done(null, existingUser);
 
-        } catch (error) {
+        }catch (error) {
             return done(error);
         }
     }
