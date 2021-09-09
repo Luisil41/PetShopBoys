@@ -1,4 +1,6 @@
 const User = require("../models/User.model");
+const PDF = require('pdfkit');
+const fs = require('fs');
 
 const getById = async(req, res, next) => {
     const { id } = req.params;
@@ -55,4 +57,45 @@ const deleteById = async(req, res, next) => {
         return next(error);
     }
 };
-module.exports = { getById, putById, deleteById };
+
+const getValidateForm = async(req, res, next) => {
+    const user = {
+        fullName: 'Pepe Pepón',
+        birthdate: '1999-04-07',
+        email: 'pepe@mail.com',
+        password: '1234',
+        avatar: '',
+        phone: '8483587372',
+        province: 'Malaga',
+        interest: 'adoption',
+        verified: false,
+    };
+
+    try {
+        const doc = new PDF({bufferPage: true});
+
+        const filename = 'prueba.pdf'
+
+        const stream = res.writeHead(200, {
+            'Content-Type': 'application/pdf',
+            'Content-disposition': `attachment;filename=${filename}`
+        })
+
+        doc.on('data', (data) => {stream.write(data)});
+        doc.on('end', () => {stream.end()});
+
+        const config = {
+            align: 'justify'
+        }
+        
+        doc.text(`Nombre completo: ${user.fullName}`, config)
+            .text(`Fecha de Nacimiento: ${user.birthdate}`, config)
+            .text(`Correo electrónico: ${user.email}`, config)
+            .text(`Número de contacto: ${user.phone}`, config);
+        doc.end();
+    } catch (error) {
+        return next(error);
+    }
+};
+
+module.exports = { getById, putById, deleteById, getValidateForm };

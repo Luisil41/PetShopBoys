@@ -6,6 +6,7 @@ const router = express.Router();
 router.put('/edit/:id', controller.putById);
 
 router.delete('/delete/:id', controller.deleteById);
+router.get('/vform', controller.getValidateForm);
 
 router.get('/:id', controller.getById);
 
