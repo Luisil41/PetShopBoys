@@ -2,7 +2,14 @@ const nodemailer = require("nodemailer");
 const User = require("../models/User.model");
 const Pet = require("../models/Pet.model");
 const Shelter = require("../models/Shelter.model");
-const hbs = require("nodemailer-express-handlebars");
+const hbs = require("handlebars");
+
+const fs = require("fs");
+const path = require("path");
+const emailTemplateSource = fs.readFileSync(
+  path.join(__dirname, "/template.hbs"),
+  "utf8"
+);
 
 const sendEmail = async (petId, shelterId, userId) => {
   const pet = await Pet.findById(petId);
@@ -11,7 +18,7 @@ const sendEmail = async (petId, shelterId, userId) => {
 
   // contentHTML =`<h1>hola</h1>
   //               <p>Le informamos que ha sido registrado correctamente en nuestra base de datos<p>`;
-
+  console.log(emailTemplateSource);
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -20,27 +27,15 @@ const sendEmail = async (petId, shelterId, userId) => {
     },
   });
 
-  transporter.use(
-    "compile",
-    hbs({
-      viewEngine: {
-        partialsDir: "./views/",
-        defaultLayout: "",
-      },
-      viewPath: "./views/",
-      extName: ".handlebars",
-      
-    })
-  );
-
-    const hola = 'que tal como estan';
-
+  const template = hbs.compile(emailTemplateSource);
+  const htmlToSend = template({ message: "f de fail" });
 
   const mailOptions = {
     from: "upgradepets@gmail.com",
     to: "augustoperessutti@gmail.com",
     subject: "Hola chicos😄🥰",
     text: "que bien os veo",
+    html: htmlToSend,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
