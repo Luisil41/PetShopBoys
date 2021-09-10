@@ -1,6 +1,7 @@
 const Request = require("../models/Request.model");
 const nodemailer = require("nodemailer");
-const { prependOnceListener } = require("../models/Request.model");
+const { sendEmail } = require('../utils/sendEmail');
+
 
 const getId = async (req, res, next) => {
   const { id } = req.params;
@@ -43,29 +44,7 @@ const postRequest = async (req, res, next) => {
     });
 
     const createdRequest = await newRequest.save();
-
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'upgradepets@gmail.com',
-            pass: 'upgrade12345' },
-    });
-
-    const mailOptions = {
-      from: "upgradepets@gmail.com",
-      to: "augustoperessutti@gmail.com",
-      subject: "Soy un correo de prueba si o no",
-      text: "hola buenas tardes",
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        return res.json("no funciono");
-      } else {
-        res.json("funciono!!!!!!!");
-      }
-    });
-
+    sendEmail(petId, shelterId, userId);
     return res.redirect(`/request/${createdRequest._id}`);
   } catch (error) {
     return next(error);
