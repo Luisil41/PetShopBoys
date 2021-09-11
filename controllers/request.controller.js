@@ -1,6 +1,16 @@
 const Request = require("../models/Request.model");
 const nodemailer = require("nodemailer");
 const { sendEmail } = require('../utils/sendEmail');
+const hbs = require("handlebars");
+const fs = require("fs");
+const path = require("path");
+const emailTemplateSource = fs.readFileSync(
+  path.join(__dirname, "../utils/template.hbs"),
+  "utf8"
+);
+const User = require("../models/User.model");
+const Shelter = require("../models/Shelter.model");
+const Pet = require("../models/Pet.model");
 
 
 const getId = async (req, res, next) => {
@@ -34,7 +44,15 @@ const deleteRequest = async (req, res, next) => {
 
 const postRequest = async (req, res, next) => {
   const { petId, userId, shelterId } = req.body;
-  console.log(petId, userId, shelterId);
+  
+  const user = await User.findById(userId);
+  const shelter = await Shelter.findById(shelterId);
+  const pet = await Pet.findById(petId);
+
+
+  const template = hbs.compile(emailTemplateSource);
+  const htmlToUser = template({ message: `Muy buenas, ${user.fullName}. Estamos revisando tu petición para adoptar/acoger a ${pet.name} del refugio ${shelter.name}. Gracias por tu solidaridad.` });
+  const htmlToShelter = template({ message: `Hola, compañeros/as de ${shelter.name}, el usuario ${user.fullName} está interesado en adoptar/acoger a ${pet.name}. Qué emoción!`});
 
   try {
     const newRequest = new Request({
@@ -44,7 +62,8 @@ const postRequest = async (req, res, next) => {
     });
 
     const createdRequest = await newRequest.save();
-    sendEmail(petId, shelterId, userId);
+    sendEmail(htmlToUser, user.email);
+    sendEmail(htmlToShelter, shelter.email);
     return res.redirect(`/request/${createdRequest._id}`);
   } catch (error) {
     return next(error);
