@@ -43,9 +43,9 @@ const deleteRequest = async(req, res, next) => {
 const postRequest = async(req, res, next) => {
     const { petId, userId, shelterId, message } = req.body;
 
-    const user = await User.findById(userId);
-    const shelter = await Shelter.findById(shelterId);
-    const pet = await Pet.findById(petId);
+    const user = await User.findById(userId).lean();
+    const shelter = await Shelter.findById(shelterId).lean();
+    const pet = await Pet.findById(petId).lean();
 
 
 
