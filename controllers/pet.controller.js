@@ -5,10 +5,10 @@ const { sendEmail } = require('../utils/sendEmail');
 const hbs = require("handlebars");
 const fs = require("fs");
 const path = require("path");
-const emailTemplateSource = fs.readFileSync(
-    path.join(__dirname, "../utils/template.hbs"),
-    "utf8"
-);
+// const emailTemplateSource = fs.readFileSync(
+//     path.join(__dirname, "../utils/template.hbs"),
+//     "utf8"
+// );
 
 const petsGet = async(req, res, next) => {
     try {
@@ -62,15 +62,13 @@ const petCreatePost = async(req, res, next) => {
             await Shelter.findByIdAndUpdate(newPet.shelter, findShelter, { new: true });
         }
 
-        const user = await User.find({ province: createdPet.province })
-        const usersEmails = [];
-        user.forEach((user) => {
-            usersEmails.push(user.email);
-        })
-        const template = hbs.compile(emailTemplateSource);
-        const htmlToUser = template({ message: `Muy buenas, ${user.fullName}. Un nuevo amigo se ha unido a nosotros por tu zona! ${createdPet.name}. Gracias por tu solidaridad.` });
+        // const template = hbs.compile(emailTemplateSource);
 
-        sendEmail(htmlToUser, usersEmails);
+        const user = await User.find({ province: createdPet.province });
+        user.forEach((user) => {
+            // const htmlToUser = template({ message: `Muy buenas, ${user.fullName}. Un nuevo amigo se ha unido a nosotros por tu zona! ${createdPet.name}. Gracias por tu solidaridad.` });
+            // sendEmail(htmlToUser, user.email);
+        });
 
         return res.redirect(`/pet/${createdPet._id}`);
     } catch (error) {
