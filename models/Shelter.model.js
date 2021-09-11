@@ -11,7 +11,8 @@ const shelterSchema = new Schema(
         avatar: { type: String },
         phone: { type: String },
         pets: [{ type: mongoose.Types.ObjectId, ref: 'Pet'}],
-        images: [{ type: String }]
+        images: [{ type: String }],
+        requests: [{ type: mongoose.Types.ObjectId, ref: 'Request' }]
     },
     { timestamps: true }
 )

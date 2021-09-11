@@ -19,7 +19,8 @@ const userSchema = new Schema(
     verified: {
       type: Boolean, default: false
     },
-    form: { type: mongoose.Types.ObjectId, ref: 'Form'}
+    form: { type: mongoose.Types.ObjectId, ref: 'Form' },
+    requests: [{ type: mongoose.Types.ObjectId, ref: 'Request' }]
   },
   { timestamps: true }
 );
