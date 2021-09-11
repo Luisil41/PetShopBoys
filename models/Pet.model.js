@@ -26,13 +26,14 @@ const petSchema = new Schema({
     isDewormed: { type: Boolean },
     microchip: { type: Boolean },
     province: { type: String, required: true },
-    shelter: { type: mongoose.Types.ObjectId, ref: 'Shelters' }, // comprobar shcema de Shelter
+    shelter: { type: mongoose.Types.ObjectId, ref: 'Shelter' }, // comprobar schema de Shelter
     status: {
         type: String,
-        enum: ['forAdoption', 'adoptionProcess', 'adopted'] // definir las opciones de status
-    }
+        enum: ['forAdoption', 'adoptionProcess', 'adopted', 'hostHouse', 'lost', 'forAdoptionOrHost'] // definir las opciones de status
+    },
+    requests: [{ type: mongoose.Types.ObjectId, ref: 'Request' }]
 }, { timestamps: true });
 
-const Pet = mongoose.model('Pets', petSchema);
+const Pet = mongoose.model('Pet', petSchema);
 
 module.exports = Pet;
