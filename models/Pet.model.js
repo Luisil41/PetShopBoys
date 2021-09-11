@@ -30,7 +30,8 @@ const petSchema = new Schema({
     status: {
         type: String,
         enum: ['forAdoption', 'adoptionProcess', 'adopted', 'hostHouse', 'lost', 'forAdoptionOrHost'] // definir las opciones de status
-    }
+    },
+    requests: [{ type: mongoose.Types.ObjectId, ref: 'Request' }]
 }, { timestamps: true });
 
 const Pet = mongoose.model('Pet', petSchema);
