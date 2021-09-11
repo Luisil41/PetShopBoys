@@ -51,7 +51,7 @@ const postRequest = async (req, res, next) => {
 
 
   const template = hbs.compile(emailTemplateSource);
-  const htmlToUser = template({ message: `Hola, ${user.fullName}. Estamos revisando tu petición para adoptar/acoger a ${pet.name} del refugio ${shelter.name}. Gracias por tu solidaridad.` });
+  const htmlToUser = template({ message: `Muy buenas, ${user.fullName}. Estamos revisando tu petición para adoptar/acoger a ${pet.name} del refugio ${shelter.name}. Gracias por tu solidaridad.` });
   const htmlToShelter = template({ message: `Hola, compañeros/as de ${shelter.name}, el usuario ${user.fullName} está interesado en adoptar/acoger a ${pet.name}. Qué emoción!`});
 
   try {
