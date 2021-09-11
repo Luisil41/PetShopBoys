@@ -33,7 +33,7 @@ const registerStrategy = new LocalStrategy(
 
             const newUser = new User({
                 email,
-                password:hash,
+                password: hash,
                 fullName: req.body.fullName,
                 birthdate: req.body.birthdate,
                 avatar: req.imageUrl ? req.imageUrl : '',
