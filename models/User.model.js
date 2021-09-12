@@ -14,7 +14,7 @@ const userSchema = new Schema(
     province: { type: String, required: true },
     interest: {
       type: String,
-      enum: ['adoption', 'both', 'hosting'] // definir las opciones de status
+      enum: ['adopción', 'ambas', 'casa de acogida'] // definir las opciones de status
   },
     verified: {
       type: Boolean, default: false

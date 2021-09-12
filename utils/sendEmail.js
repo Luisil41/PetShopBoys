@@ -11,7 +11,7 @@ const sendEmail = async (htmlToSend, mail, title) => {
   });
 
   const mailOptions = {
-    from: "upgradepets@gmail.com",
+    from: "UpgradePETS <upgradepets@gmail.com>",
     to: mail,
     subject: title,
     html: htmlToSend,
@@ -19,9 +19,9 @@ const sendEmail = async (htmlToSend, mail, title) => {
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      return console.log(error);
+      console.log(error);
     } else {
-      res.json("funciono!!!!!!!");
+      console.log('Funciona!');
     }
   });
 };
