@@ -1,5 +1,14 @@
+const User = require("../models/User.model");
 const Pet = require('../models/Pet.model');
 const Shelter = require('../models/Shelter.model');
+const { sendEmail } = require('../utils/sendEmail');
+const hbs = require("handlebars");
+const fs = require("fs");
+const path = require("path");
+// const emailTemplateSource = fs.readFileSync(
+//     path.join(__dirname, "../utils/template.hbs"),
+//     "utf8"
+// );
 
 const petsGet = async(req, res, next) => {
     try {
@@ -53,8 +62,16 @@ const petCreatePost = async(req, res, next) => {
             await Shelter.findByIdAndUpdate(newPet.shelter, findShelter, { new: true });
         }
 
+        // const template = hbs.compile(emailTemplateSource);
+
+        const user = await User.find({ province: createdPet.province });
+        user.forEach((user) => {
+            // const htmlToUser = template({ message: `Muy buenas, ${user.fullName}. Un nuevo amigo se ha unido a nosotros por tu zona! ${createdPet.name}. Gracias por tu solidaridad.` });
+            // sendEmail(htmlToUser, user.email);
+        });
+
         return res.redirect(`/pet/${createdPet._id}`);
-    }catch (error) {
+    } catch (error) {
         return next(error);
     }
 

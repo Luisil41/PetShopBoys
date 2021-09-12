@@ -4,10 +4,8 @@ const { sendEmail } = require('../utils/sendEmail');
 const hbs = require("handlebars");
 const fs = require("fs");
 const path = require("path");
-const emailTemplateSource = fs.readFileSync(
-    path.join(__dirname, "../utils/template.hbs"),
-    "utf8"
-);
+const templateUser = fs.readFileSync(path.join(__dirname, "../utils/templates/requests/requests-user.hbs"), "utf8");
+const templateShelter = fs.readFileSync(path.join(__dirname, "../utils/templates/requests/requests-shelter.hbs"), "utf8");
 const User = require("../models/User.model");
 const Shelter = require("../models/Shelter.model");
 const Pet = require("../models/Pet.model");
@@ -45,9 +43,9 @@ const deleteRequest = async(req, res, next) => {
 const postRequest = async(req, res, next) => {
     const { petId, userId, shelterId, message } = req.body;
 
-    const user = await User.findById(userId);
-    const shelter = await Shelter.findById(shelterId);
-    const pet = await Pet.findById(petId);
+    const user = await User.findById(userId).lean();
+    const shelter = await Shelter.findById(shelterId).lean();
+    const pet = await Pet.findById(petId).lean();
 
 
 
@@ -78,12 +76,14 @@ const postRequest = async(req, res, next) => {
             findPet.requests.push(createdRequest._id);
             await Pet.findByIdAndUpdate(pet._id, findPet, { new: true });
         }
-        const template = hbs.compile(emailTemplateSource);
-        const htmlToUser = template({ message: `Muy buenas, ${user.fullName}. Estamos revisando tu petición para adoptar/acoger a ${pet.name} del refugio ${shelter.name}. Gracias por tu solidaridad.` });
-        const htmlToShelter = template({ message: `Hola, compañeros/as de ${shelter.name}, el usuario ${user.fullName} está interesado en adoptar/acoger a ${pet.name}. Qué emoción!` });
+        const template = hbs.compile(templateUser);
+        const htmlToUser = template({ user: user, pet: pet, shelter: shelter }, { allowedProtoMethods: { trim: true } });
 
-        sendEmail(htmlToUser, user.email);
-        sendEmail(htmlToShelter, shelter.email);
+        const template2 = hbs.compile(templateShelter);
+        const htmlToShelter = template2({ user: user, pet: pet, shelter: shelter }, { allowedProtoMethods: { trim: true } });
+
+        sendEmail(htmlToUser, user.email, `Tu solicitud por ${pet.name} fue enviada con éxito! 🐾`);
+        sendEmail(htmlToShelter, shelter.email, `Has recibido una nueva solicitud por ${pet.name}!`);
 
         return res.redirect(`/request/${createdRequest._id}`);
     } catch (error) {
