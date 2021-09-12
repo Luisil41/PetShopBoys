@@ -5,9 +5,9 @@ Formulario de validación para la adociación
 1.- Nombre y Apellidos: string
 2.- DNI/NIF/ :  string
 3.- Domicilio: string
-4.- C. Postal string
+4.- Provincia string
 5.- Localidad string
-6.- Provincia string
+6.- C. Postal string
 7.- Fecha de Nacimiento: date
 8.- Estado Civil: string ('single', 'married', 'couple', 'divorced', 'other')
 9.- Profesión / Estudios: string

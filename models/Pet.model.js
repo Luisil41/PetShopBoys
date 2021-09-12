@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 const petSchema = new Schema({
     type: {
         type: String,
-        enum: ['dog', 'cat', 'other'],
+        enum: ['perro', 'gato', 'otro'],
         required: true,
     },
     name: { type: String, required: true },
@@ -13,13 +13,13 @@ const petSchema = new Schema({
     avatar: { type: String },
     sex: {
         type: String,
-        enum: ['male', 'female'],
+        enum: ['macho', 'hembra'],
         required: true,
     },
     breed: { type: String },
     size: {
         type: String,
-        enum: ['small', 'medium', 'large']
+        enum: ['pequeño', 'mediano', 'grande']
     },
     isVaccinated: { type: Boolean },
     isSterilized: { type: Boolean },
@@ -29,7 +29,7 @@ const petSchema = new Schema({
     shelter: { type: mongoose.Types.ObjectId, ref: 'Shelter' }, // comprobar schema de Shelter
     status: {
         type: String,
-        enum: ['forAdoption', 'adoptionProcess', 'adopted', 'hostHouse', 'lost', 'forAdoptionOrHost'] // definir las opciones de status
+        enum: ['adopción', 'en proceso de adopción', 'adoptado', 'casa de acogida', 'perdido', 'ambas'] // definir las opciones de status
     },
     requests: [{ type: mongoose.Types.ObjectId, ref: 'Request' }]
 }, { timestamps: true });
