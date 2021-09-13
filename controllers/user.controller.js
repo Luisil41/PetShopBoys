@@ -5,7 +5,7 @@ const getById = async(req, res, next) => {
 
     try {
         const user = await User.findById(id);
-        return res.json(user);
+        return res.status(200).json(user);
     } catch (error) {
         return next(error);
     }
@@ -28,8 +28,8 @@ const putById = async(req, res, next) => {
         if (interest) update.interest = interest;
 
 
-        const updateUser = await User.findByIdAndUpdate(id, update, { new: true });
-        return res.redirect(`/user/${updateUser._id}`);
+        await User.findByIdAndUpdate(id, update, { new: true });
+        return res.status(200).json('Perfil editado correctamente');
 
     } catch (error) {
         return next(error)
@@ -47,7 +47,7 @@ const deleteById = async(req, res, next) => {
             const error = new Error('Usuario no encontrado');
             return next(error);
         } else {
-            return res.redirect('/');
+            return res.status(200).json('Perfil borrado correctamente');
         }
 
 

@@ -7,7 +7,7 @@ const formById = async(req, res, next) => {
 
     try {
         const user = await User.findById(id);
-        const form = await Form.find({userId: user._id});
+        const form = await Form.find({ userId: user._id });
 
         return res.status(200).json(pets);
     } catch (error) {
@@ -19,7 +19,7 @@ const formDownload = async(req, res, next) => {
     const { id } = req.params;
 
     try {
-        const doc = new PDF({bufferPage: true});
+        const doc = new PDF({ bufferPage: true });
         const form = await Form.findById(id);
 
         const filename = `Formulario.pdf`
@@ -29,8 +29,8 @@ const formDownload = async(req, res, next) => {
             'Content-disposition': `attachment;filename=${filename}`
         })
 
-        doc.on('data', (data) => {stream.write(data)});
-        doc.on('end', () => {stream.end()});
+        doc.on('data', (data) => { stream.write(data) });
+        doc.on('end', () => { stream.end() });
 
         doc
             .fontSize(40)
@@ -44,35 +44,35 @@ const formDownload = async(req, res, next) => {
         doc
             .fontSize(20)
             .text("INFORMACIÓN DEL DEMANDANTE:");
-    
+
         generateHr(doc, 185);
-    
+
         doc
             .fontSize(10)
             .text("Nombre completo:", { align: 'left', continued: true })
-            .text(form.d1, { align: 'right', continued: false})
+            .text(form.d1, { align: 'right', continued: false })
             .text("DNI / NIF / NIE:", { align: 'left', continued: true })
-            .text(form.d2, { align: 'right', continued: false})
+            .text(form.d2, { align: 'right', continued: false })
             .text("Domicilio:", { align: 'left', continued: true })
-            .text(form.d3, { align: 'right', continued: false})
+            .text(form.d3, { align: 'right', continued: false })
             .text("Ubicación:", { align: 'left', continued: true })
-            .text(`${form.d4}, ${form.d5}, ${form.d6}`, { align: 'right', continued: false})
+            .text(`${form.d4}, ${form.d5}, ${form.d6}`, { align: 'right', continued: false })
             .text("Fecha de nacimiento:", { align: 'left', continued: true })
-            .text(formatDate(form.d7), { align: 'right', continued: false})
+            .text(formatDate(form.d7), { align: 'right', continued: false })
             .text("Estado Civil:", { align: 'left', continued: true })
-            .text(form.d8, { align: 'right', continued: false})
+            .text(form.d8, { align: 'right', continued: false })
             .text("Profesión / Estudios:", { align: 'left', continued: true })
-            .text(form.d9, { align: 'right', continued: false})
+            .text(form.d9, { align: 'right', continued: false })
             .text("Número de contacto:", { align: 'left', continued: true })
-            .text(form.d10, { align: 'right', continued: false})
+            .text(form.d10, { align: 'right', continued: false })
             .text("Correo electrónico:", { align: 'left', continued: true })
-            .text(form.d11, { align: 'right', continued: false})
+            .text(form.d11, { align: 'right', continued: false })
             .moveDown();
-    
+
         doc
             .fontSize(20)
             .text("VIVIENDA:");
-    
+
         generateHr(doc, 185);
 
         doc
@@ -80,8 +80,7 @@ const formDownload = async(req, res, next) => {
             .text(
                 "PetSHOP Boys footer de ejemplo a ver como funciona 2021.",
                 50,
-                780,
-                { align: "center", width: 500 }
+                780, { align: "center", width: 500 }
             );
 
         doc.end();
@@ -96,19 +95,51 @@ const formCreate = async(req, res, next) => {
 
     try {
         const newForm = new Form({
-            d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11,
-            h1, h2, h3, h4, h5, h6, h7, h8,
-            f1, f2, f3, f4, f5,
-            o1, o2, o3, o4,
-            g1, g2, g3, g4,
-            a1, a2, a3, a4, a5,
-            p1, p2,
+            d1,
+            d2,
+            d3,
+            d4,
+            d5,
+            d6,
+            d7,
+            d8,
+            d9,
+            d10,
+            d11,
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6,
+            h7,
+            h8,
+            f1,
+            f2,
+            f3,
+            f4,
+            f5,
+            o1,
+            o2,
+            o3,
+            o4,
+            g1,
+            g2,
+            g3,
+            g4,
+            a1,
+            a2,
+            a3,
+            a4,
+            a5,
+            p1,
+            p2,
             m1
         });
 
-        const createdForm = await newForm.save();
+        await newForm.save();
 
-        return res.redirect(`/user/form/${createdForm._id}`);
+        return res.status(200).json('Formulario creado');
     } catch (error) {
         return next(error);
     }
@@ -136,9 +167,9 @@ const formEdit = async(req, res, next) => {
         // if (shelter) update.shelter = shelter;
         // if (status) update.status = status;
 
-        // const updatedPet = await Pet.findByIdAndUpdate(id, update, { new: true });
+        // await Pet.findByIdAndUpdate(id, update, { new: true });
 
-        // return res.redirect(`/pet/${updatedPet._id}`);
+        // return res.status(200).json('Formulario editado correctamente'); 
 
     } catch (error) {
         return next(error);
@@ -154,7 +185,7 @@ const formDelete = async(req, res, next) => {
         //     const error = new Error('Mascota no encontrada');
         //     return next(error);
         // } else {
-        //     return res.redirect(`/pet/all`);
+        //     return res.status(200).json('Formulario borrado correctamente');
         // }
     } catch (error) {
         return next(error);
@@ -163,18 +194,18 @@ const formDelete = async(req, res, next) => {
 
 function generateHr(doc, y) {
     doc
-      .strokeColor("#aaaaaa")
-      .lineWidth(1)
-      .moveTo(50, y)
-      .lineTo(550, y)
-      .stroke();
+        .strokeColor("#aaaaaa")
+        .lineWidth(1)
+        .moveTo(50, y)
+        .lineTo(550, y)
+        .stroke();
 }
 
 function formatDate(date) {
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-  
+
     return year + "/" + month + "/" + day;
 }
 
