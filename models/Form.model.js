@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const formSchema = new Schema(
     {
+      userId: { type: mongoose.Types.ObjectId, ref: 'User' },
       d1: { type: String, required: true  },
       d2: { type: String, required: true  },
       d3: { type: String, required: true  },
@@ -71,6 +72,6 @@ const formSchema = new Schema(
     { timestamps: true }
   );
   
-  const Form = mongoose.model("Form", userSchema);
+  const Form = mongoose.model("Form", formSchema);
   
   module.exports = Form;
