@@ -72,7 +72,7 @@ const logoutPost = (req, res, next) => {
             req.logout();
             req.session.destroy(() => {
                 res.clearCookie('connect.sid');
-                return res.redirect('/');
+                return res.status(200).json('Logout con exito');
             });
         }
 
