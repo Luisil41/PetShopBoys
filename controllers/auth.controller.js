@@ -67,7 +67,6 @@ const loginShelterPost = (req, res, next) => {
 
 const logoutPost = (req, res, next) => {
     try {
-
         if (req.user) { // aquí user incluye a shelter?
             req.logout();
             req.session.destroy(() => {
@@ -81,10 +80,28 @@ const logoutPost = (req, res, next) => {
     }
 };
 
+const checkSession = (req, res, next) => {
+    try {
+        if (req.isAuthenticated()) {
+            const fullUser = req.user;
+            fullUser.password = null;
+            
+            return res.status(200).json(fullUser);
+        } else {
+            const error = new Error('Necesitas logearte para acceder.')
+            error.status = 401
+            return next(error)
+        }
+    } catch (error) {
+
+    }
+}
+
 module.exports = {
     loginUserPost,
     registerUserPost,
     registerShelterPost,
     loginShelterPost,
-    logoutPost
+    logoutPost,
+    checkSession
 }
