@@ -11,6 +11,7 @@ router.post('/user/login', controller.loginUserPost);
 router.post('/shelter/register', [upload.single('avatar'), uploadToCloudinary], controller.registerShelterPost);
 router.post('/shelter/login', controller.loginShelterPost);
 
+router.get('/check-session', controller.checkSession);
 
 router.post('/logout', controller.logoutPost);
 

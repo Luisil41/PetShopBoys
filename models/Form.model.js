@@ -15,7 +15,7 @@ const formSchema = new Schema(
       d8: {
         type: String,
         required: true,
-        enum: ['single', 'married', 'couple', 'divorced', 'other']
+        enum: ['soltero/a', 'casado/a', 'en pareja', 'divorciado', 'otro']
         },
       d9: { type: String, required: true  },
       d10: { type: String, required: true  },
@@ -24,13 +24,13 @@ const formSchema = new Schema(
       h1: {
         type: String,
         required: true,
-        enum: ['house', 'flat']
+        enum: ['casa', 'piso']
       },
       h2: { type: Boolean },
       h3: {
         type: String,
         required: true,
-        enum: ['property', 'rent']
+        enum: ['propia', 'alquilada']
       },
       h4: { type: Boolean },
       h5: { type: Boolean, required: true  },
@@ -61,7 +61,7 @@ const formSchema = new Schema(
       a5: {
         type: String,
         required: true,
-        enum: ['yes', 'no', 'notknow']
+        enum: ['si', 'no', 'no se']
       },
 
       p1: { type: String, required: true  },
