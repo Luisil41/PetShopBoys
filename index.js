@@ -1,5 +1,6 @@
 const express = require('express');
 const passport = require('passport');
+const cors = require('cors');
 const path = require('path');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
@@ -27,6 +28,8 @@ const { connect, mongodb } = require('./utils/mongodb');
 connect();
 
 const PORT = 3000;
+
+app.use(cors({credentials: true, origin: 'http://localhost:3001'}));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
