@@ -17,7 +17,7 @@ const getId = async(req, res, next) => {
             .populate("petId")
             .populate("userId")
             .populate("shelterId");
-        return res.json(request);
+        return res.status(200).json(request);
     } catch (error) {
         return next(error);
     }
@@ -32,7 +32,7 @@ const deleteRequest = async(req, res, next) => {
             const error = new Error("Petición no encontrada.");
             return next.error(error);
         } else {
-            return res.redirect("/");
+            return res.status(200).json('Petición borrada correctamente');
         }
     } catch (error) {
         return next(error);
@@ -77,14 +77,14 @@ const postRequest = async(req, res, next) => {
         }
         const template = hbs.compile(templateUser);
         const htmlToUser = template({ user: user, pet: pet, shelter: shelter });
-       
+
         const template2 = hbs.compile(templateUser);
         const htmlToShelter = template2({ user: user, pet: pet, shelter: shelter });
 
         sendEmail(htmlToUser, user.email, `Tu solicitud por ${pet.name} fue enviada con éxito! 🐾`);
         sendEmail(htmlToShelter, shelter.email, `Has recibido una nueva solicitud por ${pet.name}!`);
 
-        return res.redirect(`/request/${createdRequest._id}`);
+        return res.status(202).json('¡Petición creada correctamente!');
     } catch (error) {
         return next(error);
     }
@@ -95,7 +95,7 @@ const requestByUserId = async(req, res, next) => {
     try {
         const requestUserId = await Request.find({ userId: id });
 
-        return res.json(requestUserId);
+        return res.status(200).json(requestUserId);
     } catch (error) {
         return next(error);
     }
@@ -106,7 +106,7 @@ const requestByShelterId = async(req, res, next) => {
     try {
         const requestUserId = await Request.find({ shelterId: id });
 
-        return res.json(requestUserId);
+        return res.status(200).json(requestUserId);
     } catch (error) {
         return next(error);
     }
@@ -117,7 +117,7 @@ const requestByPetId = async(req, res, next) => {
     try {
         const requestUserId = await Request.find({ petId: id });
 
-        return res.json(requestUserId);
+        return res.status(200).json(requestUserId);
     } catch (error) {
         return next(error);
     }

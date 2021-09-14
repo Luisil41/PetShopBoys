@@ -23,7 +23,7 @@ const petDetailGet = async(req, res, next) => {
 
     try {
         const pet = await Pet.findById(id).populate('shelter');
-        return res.json(pet);
+        return res.status(200).json(pet);
     } catch (error) {
         return next(error);
     }
@@ -64,7 +64,7 @@ const petCreatePost = async(req, res, next) => {
         const template2 = hbs.compile(templateLostPet);
 
         const user = await User.find({ province: createdPet.province });
-        if(createdPet.status == 'lost') {
+        if (createdPet.status == 'lost') {
             user.forEach((user) => {
                 const htmlToUser = template2({ user: user, pet: createdPet });
                 sendEmail(htmlToUser, user.email, 'Se ha perdido mascota en tu zona! ☹️');
@@ -76,7 +76,7 @@ const petCreatePost = async(req, res, next) => {
             });
         }
 
-        return res.redirect(`/pet/${createdPet._id}`);
+        return res.status(201).json('Mascota creada correctamente');
     } catch (error) {
         return next(error);
     }
@@ -104,9 +104,9 @@ const petEditPut = async(req, res, next) => {
         if (shelter) update.shelter = shelter;
         if (status) update.status = status;
 
-        const updatedPet = await Pet.findByIdAndUpdate(id, update, { new: true });
+        await Pet.findByIdAndUpdate(id, update, { new: true });
 
-        return res.redirect(`/pet/${updatedPet._id}`);
+        return res.status(200).json('Mascota editada correctamente');
 
     } catch (error) {
         return next(error);
@@ -122,7 +122,7 @@ const petDelete = async(req, res, next) => {
             const error = new Error('Mascota no encontrada');
             return next(error);
         } else {
-            return res.redirect(`/pet/all`);
+            return res.status(200).json('Mascota borrada correctamente');
         }
     } catch (error) {
         return next(error);
@@ -148,7 +148,7 @@ const filteredPet = async(req, res, next) => {
 
         const filtered = await Pet.find(request);
 
-        return res.json(filtered);
+        return res.status(200).json(filtered);
 
     } catch (error) {
         return next(error);
