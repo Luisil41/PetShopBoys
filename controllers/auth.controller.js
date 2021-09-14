@@ -85,15 +85,13 @@ const checkSession = (req, res, next) => {
         if (req.isAuthenticated()) {
             const fullUser = req.user;
             fullUser.password = null;
-            
+
             return res.status(200).json(fullUser);
         } else {
-            const error = new Error('Necesitas logearte para acceder.')
-            error.status = 401
-            return next(error)
+            return res.json('Necesitas logearte para acceder.')
         }
     } catch (error) {
-
+        return next(error);
     }
 }
 
