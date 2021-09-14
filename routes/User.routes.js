@@ -8,7 +8,7 @@ router.put('/edit/:id', controller.putById);
 
 router.delete('/delete/:id', controller.deleteById);
 
-router.post('/form/new', formController.formCreate);
+router.post('/form/new', formController.formCreate); // ID-> user
 router.get('/form/download/:id', formController.formDownload); // ID -> form
 router.delete('/form/delete', formController.formDelete);
 router.put('/form/edit/:id', formController.formEdit); // ID -> form

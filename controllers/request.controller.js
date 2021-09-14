@@ -46,8 +46,6 @@ const postRequest = async(req, res, next) => {
     const shelter = await Shelter.findById(shelterId);
     const pet = await Pet.findById(petId);
 
-
-
     try {
         const newRequest = new Request({
             petId,
