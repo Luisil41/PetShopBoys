@@ -5,10 +5,8 @@ const { sendEmail } = require('../utils/sendEmail');
 const hbs = require("handlebars");
 const fs = require("fs");
 const path = require("path");
-// const emailTemplateSource = fs.readFileSync(
-//     path.join(__dirname, "../utils/template.hbs"),
-//     "utf8"
-// );
+const templateNewPet = fs.readFileSync(path.join(__dirname, "../utils/templates/pets/newpet.hbs"), "utf8");
+const templateLostPet = fs.readFileSync(path.join(__dirname, "../utils/templates/pets/lostpet.hbs"), "utf8");
 
 const petsGet = async(req, res, next) => {
     try {
@@ -62,13 +60,21 @@ const petCreatePost = async(req, res, next) => {
             await Shelter.findByIdAndUpdate(newPet.shelter, findShelter, { new: true });
         }
 
-        // const template = hbs.compile(emailTemplateSource);
+        const template = hbs.compile(templateNewPet);
+        const template2 = hbs.compile(templateLostPet);
 
         const user = await User.find({ province: createdPet.province });
-        user.forEach((user) => {
-            // const htmlToUser = template({ message: `Muy buenas, ${user.fullName}. Un nuevo amigo se ha unido a nosotros por tu zona! ${createdPet.name}. Gracias por tu solidaridad.` });
-            // sendEmail(htmlToUser, user.email);
-        });
+        if(createdPet.status == 'lost') {
+            user.forEach((user) => {
+                const htmlToUser = template2({ user: user, pet: createdPet });
+                sendEmail(htmlToUser, user.email, 'Se ha perdido mascota en tu zona! ☹️');
+            });
+        } else {
+            user.forEach((user) => {
+                const htmlToUser = template({ user: user, pet: createdPet });
+                sendEmail(htmlToUser, user.email, 'Hay nueva mascota en tu zona! 🤩');
+            });
+        }
 
         return res.redirect(`/pet/${createdPet._id}`);
     } catch (error) {
