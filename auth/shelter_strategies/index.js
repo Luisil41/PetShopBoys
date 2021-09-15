@@ -1,11 +1,7 @@
 const passport = require('passport');
-
-
 const registerStrategyShelter = require('./register.strategy');
 const loginStrategyShelter = require('./login.strategy');
 const Shelter = require('../../models/Shelter.model');
-
-
 
 passport.serializeUser((user, done) => {
 
@@ -22,9 +18,9 @@ passport.deserializeUser(async(userId, done) => {
 });
 
 
-const useStrategy = () => {
+const shelterUseStrategy = () => {
     passport.use('register_shelter', registerStrategyShelter);
     passport.use('login_shelter', loginStrategyShelter);
 };
 
-module.exports = { useStrategy };
+module.exports = { shelterUseStrategy };

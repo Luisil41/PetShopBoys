@@ -10,11 +10,11 @@ const app = express();
 const dotenv = require('dotenv');
 dotenv.config();
 
-const auth = require('./auth/user_strategies');
-auth.useStrategy();
+// const auth = require('./auth/user_strategies');
+// auth.userUseStrategy();
 
 const auth2 = require('./auth/shelter_strategies');
-auth2.useStrategy();
+auth2.shelterUseStrategy();
 
 const shelterRoutes = require('./routes/Shelter.routes');
 const petRoutes = require('./routes/Pet.routes');
@@ -39,6 +39,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set('views', path.join(__dirname, 'templates'));
 
 app.use(session({
+    name: 'logincookie',
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,

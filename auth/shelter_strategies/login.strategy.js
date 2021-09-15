@@ -2,7 +2,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const Shelter = require("../../models/Shelter.model");
 const bcrypt = require("bcrypt");
 
-const loginStrategy2 = new LocalStrategy(
+const loginStrategyShelter = new LocalStrategy(
     {
         usernameField: "email",
         passwordField: "password",
@@ -34,4 +34,4 @@ const loginStrategy2 = new LocalStrategy(
     }
 );
 
-module.exports = loginStrategy2;
+module.exports = loginStrategyShelter;
