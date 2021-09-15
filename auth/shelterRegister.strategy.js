@@ -1,29 +1,28 @@
 const LocalStrategy = require("passport-local").Strategy;
-const User = require("../../models/User.model");
+const Shelter = require("../models/Shelter.model");
 const bcrypt = require("bcrypt");
-const { validateEmail, validatePass } = require("../utils");
+const { validateEmail, validatePass } = require("./utils");
 
-const registerStrategy = new LocalStrategy(
-    {
+const registerStrategyShelter = new LocalStrategy({
         usernameField: "email",
         passwordField: "password",
         passReqToCallback: true,
     },
-    async (req, email, pass, done) => {
-        try{
-            const existingUser = await User.findOne({email});
+    async(req, email, pass, done) => {
+        try {
+            const existingShelter = await Shelter.findOne({ email });
 
-            if(existingUser){
-                const error = new Error('El usuario ya existe.');
+            if (existingShelter) {
+                const error = new Error('El refugio ya existe.');
                 return done(error);
             }
 
-            if(!validateEmail(email)){
+            if (!validateEmail(email)) {
                 const error = new Error('El formato de email no es correcto.');
                 return done(error);
             }
 
-            if(!validatePass(pass)){
+            if (!validatePass(pass)) {
                 const error = new Error('El formato de contraseña no es válido.');
                 return done(error);
             }
@@ -31,26 +30,26 @@ const registerStrategy = new LocalStrategy(
             const rounds = 10;
             const hash = await bcrypt.hash(pass, rounds);
 
-            const newUser = new User({
+            const newShelter = new Shelter({
                 email,
                 password: hash,
-                fullName: req.body.fullName,
-                birthdate: req.body.birthdate,
+                name: req.body.name,
+                address: req.body.address,
                 avatar: req.imageUrl ? req.imageUrl : '',
                 phone: req.body.phone,
                 province: req.body.province,
-                interest: req.body.interest,
+                description: req.body.description,
             });
 
-            const user = await newUser.save();
-            user.password = null;
-            
-            return done(null, user);
+            const shelter = await newShelter.save();
+            shelter.password = null;
 
-        }catch (error) {
+            return done(null, shelter);
+
+        } catch (error) {
             return done(error);
         }
     }
 );
 
-module.exports = registerStrategy;
+module.exports = registerStrategyShelter;

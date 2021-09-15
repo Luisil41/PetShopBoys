@@ -1,19 +1,19 @@
 const LocalStrategy = require("passport-local").Strategy;
-const Shelter = require("../../models/Shelter.model");
+const User = require("../models/User.model");
 const bcrypt = require("bcrypt");
-const { validateEmail, validatePass } = require("../utils");
+const { validateEmail, validatePass } = require("./utils");
 
-const registerStrategyShelter = new LocalStrategy({
+const registerStrategy = new LocalStrategy({
         usernameField: "email",
         passwordField: "password",
         passReqToCallback: true,
     },
     async(req, email, pass, done) => {
         try {
-            const existingShelter = await Shelter.findOne({ email });
+            const existingUser = await User.findOne({ email });
 
-            if (existingShelter) {
-                const error = new Error('El refugio ya existe.');
+            if (existingUser) {
+                const error = new Error('El usuario ya existe.');
                 return done(error);
             }
 
@@ -30,21 +30,21 @@ const registerStrategyShelter = new LocalStrategy({
             const rounds = 10;
             const hash = await bcrypt.hash(pass, rounds);
 
-            const newShelter = new Shelter({
+            const newUser = new User({
                 email,
                 password: hash,
-                name: req.body.name,
-                address: req.body.address,
+                fullName: req.body.fullName,
+                birthdate: req.body.birthdate,
                 avatar: req.imageUrl ? req.imageUrl : '',
                 phone: req.body.phone,
                 province: req.body.province,
-                description: req.body.description,
+                interest: req.body.interest,
             });
 
-            const shelter = await newShelter.save();
-            shelter.password = null;
+            const user = await newUser.save();
+            user.password = null;
 
-            return done(null, shelter);
+            return done(null, user);
 
         } catch (error) {
             return done(error);
@@ -52,4 +52,4 @@ const registerStrategyShelter = new LocalStrategy({
     }
 );
 
-module.exports = registerStrategyShelter;
+module.exports = registerStrategy;

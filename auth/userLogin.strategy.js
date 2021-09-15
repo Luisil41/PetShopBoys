@@ -1,25 +1,24 @@
 const LocalStrategy = require("passport-local").Strategy;
-const User = require("../../models/User.model");
+const User = require("../models/User.model");
 const bcrypt = require("bcrypt");
 
-const loginStrategy = new LocalStrategy(
-    {
+const loginStrategy = new LocalStrategy({
         usernameField: "email",
         passwordField: "password",
         passReqToCallback: true,
     },
-    async (req, email, pass, done) => {
-        try{
-            const existingUser = await User.findOne({email});
-            
-            if(!existingUser){
+    async(req, email, pass, done) => {
+        try {
+            const existingUser = await User.findOne({ email });
+
+            if (!existingUser) {
                 const error = new Error('El usuario no existe.');
                 return done(error);
             }
 
             const checkPassword = await bcrypt.compare(pass, existingUser.password);
 
-            if(!checkPassword){
+            if (!checkPassword) {
                 const error = new Error('La contraseña no es correcta.');
                 return done(error);
             }
@@ -28,7 +27,7 @@ const loginStrategy = new LocalStrategy(
 
             return done(null, existingUser);
 
-        }catch (error) {
+        } catch (error) {
             return done(error);
         }
     }

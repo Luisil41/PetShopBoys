@@ -23,7 +23,7 @@ const loginUserPost = (req, res, next) => {
 
         const done = (error, user) => {
             if (error) return res.json(error);
-            req.login(user, (error) => (error ? next(error) : res.redirect('/')));
+            req.login(user, (error) => (error ? next(error) : res.json(user)));
         };
 
         passport.authenticate('login_user', done)(req);
