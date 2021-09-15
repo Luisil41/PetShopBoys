@@ -52,10 +52,9 @@ const registerShelterPost = (req, res, next) => {
 
 const loginShelterPost = (req, res, next) => {
     try {
-
-        const done = (error, shelter) => { // shelter -> user change
+        const done = (error, user) => { // user -> user change
             if (error) return res.json(error);
-            req.login(shelter, (error) => (error ? next(error) : res.redirect('/')));
+            req.login(user, (error) => (error ? next(error) : res.json(user)));
         };
 
         passport.authenticate('login_shelter', done)(req);
@@ -66,16 +65,21 @@ const loginShelterPost = (req, res, next) => {
 };
 
 const logoutPost = (req, res, next) => {
+    console.log('holaa arriba!')
+    console.log(req.user)
     try {
         if (req.user) { // aquí user incluye a shelter?
+            console.log('holaa!')
             req.logout();
             req.session.destroy(() => {
-                res.clearCookie('connect.sid');
+                res.clearCookie('logincookie');
                 return res.status(200).json('Logout con exito');
             });
         }
 
     } catch (error) {
+        console.log('holaa error!')
+
         return next(error);
     }
 };
