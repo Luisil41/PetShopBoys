@@ -33,3 +33,40 @@
 // };
 
 // module.exports = { useStrategy };
+
+const passport = require('passport');
+const registerUserStrategy = require('./userRegister.strategy')
+const loginUserStrategy = require('./userLogin.strategy')
+const registerShelterStrategy = require('./shelterRegister.strategy')
+const loginShelterStrategy = require('./shelterLogin.strategy')
+const User = require('../models/User.model');
+const Shelter = require('../models/Shelter.model');
+
+
+passport.serializeUser((user, done) => {
+    return done(null, user._id);
+});
+passport.deserializeUser(async(userId, done) => {
+    try {
+        const existingUser = await User.findById(userId);
+        const existingShelter = await Shelter.findById(userId);
+        if (existingUser) {
+            return done(null, existingUser);
+        } else if (existingShelter) {
+            return done(null, existingShelter);
+        }
+    } catch (error) {
+        return done(error, null);
+    }
+});
+
+
+const useStrategies = () => {
+
+    passport.use('register_user', registerUserStrategy);
+    passport.use('login_user', loginUserStrategy);
+    passport.use('register_shelter', registerShelterStrategy);
+    passport.use('login_shelter', loginShelterStrategy);
+}
+
+module.exports = { useStrategies };
