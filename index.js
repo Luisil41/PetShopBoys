@@ -10,8 +10,8 @@ const app = express();
 const dotenv = require('dotenv');
 dotenv.config();
 
-// const auth = require('./auth/user_strategies');
-// auth.userUseStrategy();
+const auth = require('./auth/user_strategies');
+auth.userUseStrategy();
 
 const auth2 = require('./auth/shelter_strategies');
 auth2.shelterUseStrategy();
