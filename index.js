@@ -10,11 +10,12 @@ const app = express();
 const dotenv = require('dotenv');
 dotenv.config();
 
-// const auth = require('./auth/user_strategies');
-// auth.userUseStrategy();
+const auth = require('./auth');
+auth.useStrategies();
 
-const auth2 = require('./auth/shelter_strategies');
-auth2.shelterUseStrategy();
+// const auth2 = require('./auth/shelter_strategies');
+// auth2.shelterUseStrategy();
+// require('./auth');
 
 const shelterRoutes = require('./routes/Shelter.routes');
 const petRoutes = require('./routes/Pet.routes');
