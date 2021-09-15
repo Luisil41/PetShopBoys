@@ -37,6 +37,8 @@ const registerStrategy2 = new LocalStrategy({
                 address: req.body.address,
                 avatar: req.imageUrl ? req.imageUrl : '',
                 phone: req.body.phone,
+                province: req.body.province,
+                description: req.body.description,
             });
 
             const shelter = await newShelter.save();

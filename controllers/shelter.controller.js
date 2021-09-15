@@ -41,7 +41,7 @@ const shelterDeleteById = async(req, res, next) => {
 const shelterEditPut = async(req, res, next) => {
     try {
         const { id } = req.params;
-        const { name, email, address, description, phone } = req.body;
+        const { name, email, address, description, phone, province } = req.body;
 
         const update = {};
         if (name) update.name = name;
@@ -50,6 +50,7 @@ const shelterEditPut = async(req, res, next) => {
         if (address) update.address = address;
         // if ( req.imageUrl ) update.avatar = req.imageUrl;
         if (phone) update.phone = phone;
+        if (province) update.province = province;
 
         await Shelter.findByIdAndUpdate(id, update, { new: true });
 
