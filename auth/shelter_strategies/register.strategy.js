@@ -3,7 +3,7 @@ const Shelter = require("../../models/Shelter.model");
 const bcrypt = require("bcrypt");
 const { validateEmail, validatePass } = require("../utils");
 
-const registerStrategy2 = new LocalStrategy({
+const registerStrategyShelter = new LocalStrategy({
         usernameField: "email",
         passwordField: "password",
         passReqToCallback: true,
@@ -52,4 +52,4 @@ const registerStrategy2 = new LocalStrategy({
     }
 );
 
-module.exports = registerStrategy2;
+module.exports = registerStrategyShelter;
