@@ -10,6 +10,9 @@ router.get('/find/user/:id', controller.requestByUserId);
 router.get('/find/shelter/:id', controller.requestByShelterId);
 router.get('/find/pet/:id', controller.requestByPetId);
 
+router.put('/accepted/:id', controller.acceptedRequest);
+router.put('/denied/:id', controller.deniedRequest);
+
 router.get('/:id', controller.getId);
 
 module.exports = router;
