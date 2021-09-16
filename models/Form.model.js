@@ -15,7 +15,7 @@ const formSchema = new Schema(
       d8: {
         type: String,
         required: true,
-        enum: ['soltero/a', 'casado/a', 'en pareja', 'divorciado', 'otro']
+        enum: ['soltero/a', 'casado/a', 'en pareja', 'divorciado/a', 'otro']
         },
       d9: { type: String, required: true  },
       d10: { type: String, required: true  },

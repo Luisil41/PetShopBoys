@@ -10,7 +10,7 @@ router.delete('/delete/:id', controller.deleteById);
 
 router.post('/form/new', formController.formCreate); // ID-> user
 router.get('/form/download/:id', formController.formDownload); // ID -> form
-router.delete('/form/delete', formController.formDelete);
+router.delete('/form/delete/:id', formController.formDelete); // ID -> form
 router.put('/form/edit/:id', formController.formEdit); // ID -> form
 router.get('/form/:id', formController.formById); // ID -> user
 
