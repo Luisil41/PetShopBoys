@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const shelterSchema = new Schema({
+    role: { type: String, default: 'shelter' },
     name: { type: String, required: true },
     email: { type: String, required: false },
     password: { type: String, required: true },
