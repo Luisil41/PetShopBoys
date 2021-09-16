@@ -121,6 +121,34 @@ const requestByPetId = async(req, res, next) => {
     }
 };
 
+const acceptedRequest = async(req, res, next) => {
+    const { id } = req.params;
+    try {
+        const requestId = await Request.findById(id);
+        
+        requestId.status = 'aprobada';
+        await Request.findByIdAndUpdate(id, requestId, { new: true})
+        return res.status(200).json('Solicitud aprobada.')
+
+    }catch (error) {
+        return next(error);
+    }
+};
+
+const deniedRequest = async(req, res, next) => {
+    const { id } = req.params;
+    try {
+        const requestId = await Request.findById(id);
+        
+        requestId.status = 'denegada';
+        await Request.findByIdAndUpdate(id, requestId, { new: true})
+        return res.status(200).json('Solicitud denegada.')
+
+    }catch (error) {
+        return next(error);
+    }
+};
+
 module.exports = {
     getId,
     deleteRequest,
@@ -128,4 +156,6 @@ module.exports = {
     requestByUserId,
     requestByShelterId,
     requestByPetId,
+    acceptedRequest,
+    deniedRequest
 };
