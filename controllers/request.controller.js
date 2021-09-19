@@ -91,7 +91,10 @@ const postRequest = async(req, res, next) => {
 const requestByUserId = async(req, res, next) => {
     const { id } = req.params;
     try {
-        const requestUserId = await Request.find({ userId: id });
+        const requestUserId = await Request.find({ userId: id })
+            .populate("petId")
+            .populate("userId")
+            .populate("shelterId");
 
         return res.status(200).json(requestUserId);
     } catch (error) {
@@ -102,7 +105,10 @@ const requestByUserId = async(req, res, next) => {
 const requestByShelterId = async(req, res, next) => {
     const { id } = req.params;
     try {
-        const requestUserId = await Request.find({ shelterId: id });
+        const requestUserId = await Request.find({ shelterId: id })
+            .populate("petId")
+            .populate("userId")
+            .populate("shelterId");
 
         return res.status(200).json(requestUserId);
     } catch (error) {
@@ -113,7 +119,10 @@ const requestByShelterId = async(req, res, next) => {
 const requestByPetId = async(req, res, next) => {
     const { id } = req.params;
     try {
-        const requestUserId = await Request.find({ petId: id });
+        const requestUserId = await Request.find({ petId: id })
+            .populate("petId")
+            .populate("userId")
+            .populate("shelterId");
 
         return res.status(200).json(requestUserId);
     } catch (error) {
