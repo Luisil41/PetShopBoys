@@ -26,10 +26,11 @@ const petSchema = new Schema({
     isDewormed: { type: Boolean },
     microchip: { type: Boolean },
     province: { type: String, required: true },
-    shelter: { type: mongoose.Types.ObjectId, ref: 'Shelter' }, // comprobar schema de Shelter
+    shelter: { type: mongoose.Types.ObjectId, ref: 'Shelter' },
+    user: { type: mongoose.Types.ObjectId, ref: 'User' },
     status: {
         type: String,
-        enum: ['adopción', 'en proceso de adopción', 'adoptado', 'casa de acogida', 'perdido', 'ambas'] // definir las opciones de status
+        enum: ['adopción', 'en proceso de adopción', 'adoptado', 'casa de acogida', 'perdido', 'ambas']
     },
     requests: [{ type: mongoose.Types.ObjectId, ref: 'Request' }]
 }, { timestamps: true });

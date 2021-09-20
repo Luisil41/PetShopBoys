@@ -31,7 +31,7 @@ const petDetailGet = async(req, res, next) => {
 }
 
 const petCreatePost = async(req, res, next) => {
-    const { type, name, avatar, age, sex, breed, size, isVaccinated, isSterilized, isDewormed, microchip, province, shelter, status } = req.body;
+    const { type, name, avatar, age, sex, breed, size, isVaccinated, isSterilized, isDewormed, microchip, province, shelter, user, status } = req.body;
 
     try {
 
@@ -49,6 +49,7 @@ const petCreatePost = async(req, res, next) => {
             microchip,
             province,
             shelter,
+            user,
             status
         });
 
@@ -58,6 +59,12 @@ const petCreatePost = async(req, res, next) => {
             const findShelter = await Shelter.findById(newPet.shelter).populate('pets');
             findShelter.pets.push(createdPet._id);
             await Shelter.findByIdAndUpdate(newPet.shelter, findShelter, { new: true });
+        }
+
+        if (user) {
+            const findUser = await User.findById(newPet.user).populate('pets');
+            findUser.pets.push(createdPet._id);
+            await User.findByIdAndUpdate(newPet.shelter, findUser, { new: true });
         }
 
         const template = hbs.compile(templateNewPet);
@@ -87,7 +94,7 @@ const petEditPut = async(req, res, next) => {
     const { id } = req.params;
 
     try {
-        const { type, name, age, sex, breed, size, isVaccinated, isSterilized, isDewormed, microchip, province, shelter, status } = req.body;
+        const { type, name, age, sex, breed, size, isVaccinated, isSterilized, isDewormed, microchip, province, shelter, user, status } = req.body;
         const update = {};
 
         if (type) update.type = type;
@@ -102,6 +109,7 @@ const petEditPut = async(req, res, next) => {
         if (microchip) update.microchip = microchip;
         if (province) update.province = province;
         if (shelter) update.shelter = shelter;
+        if (user) update.user = user;
         if (status) update.status = status;
 
         await Pet.findByIdAndUpdate(id, update, { new: true });
