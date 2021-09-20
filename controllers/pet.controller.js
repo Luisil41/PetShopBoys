@@ -70,14 +70,14 @@ const petCreatePost = async(req, res, next) => {
         const template = hbs.compile(templateNewPet);
         const template2 = hbs.compile(templateLostPet);
 
-        const user = await User.find({ province: createdPet.province });
+        const userFetch = await User.find({ province: createdPet.province });
         if (createdPet.status == 'lost') {
-            user.forEach((user) => {
+            userFetch.forEach((user) => {
                 const htmlToUser = template2({ user: user, pet: createdPet });
                 sendEmail(htmlToUser, user.email, 'Se ha perdido mascota en tu zona! ☹️');
             });
         } else {
-            user.forEach((user) => {
+            userFetch.forEach((user) => {
                 const htmlToUser = template({ user: user, pet: createdPet });
                 sendEmail(htmlToUser, user.email, 'Hay nueva mascota en tu zona! 🤩');
             });
